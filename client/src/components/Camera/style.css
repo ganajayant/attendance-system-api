@@ -1,0 +1,20 @@
+input {
+  box-sizing: border-box;
+  border: 2px solid black;
+  border-radius: 6px;
+  outline: none;
+  background: none;
+  text-transform: none;
+  height: 50px;
+  width: 370px;
+  line-height: 100%;
+  font-size: 18px;
+  padding: 5px 10px;
+  color: black;
+  margin: 10px 0px;
+  transition: 0.3s;
+}
+
+label {
+  font-size: 25px;
+}

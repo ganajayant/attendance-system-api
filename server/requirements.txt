@@ -1,0 +1,4 @@
+opencv-contrib-python==4.8.1.78
+Flask==2.3.3
+Flask-Cors==4.0.0
+numpy==1.25.2

@@ -1,0 +1,103 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,500;0,700;1,400&display=swap");
+
+:root {
+  --orange: #ffbb00e3;
+  --box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.1);
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  font-family: "Nunito", sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-transform: capitalize;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  transition: all 0.2s linear;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+  scroll-padding-top: 6rem;
+  scroll-behavior: smooth;
+}
+
+.section {
+  padding: 2rem 9%;
+}
+
+.heading {
+  font-size: 40px;
+}
+
+.table-parent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn {
+  background-color: #ffbb00e3;
+  height: 50px;
+  width: 150px;
+  font-weight: 600;
+  border-radius: 20px;
+  cursor: pointer;
+  color: black;
+  padding: 5px 20px;
+  border: none;
+}
+
+.btn:hover {
+  background: none;
+  color: #ffbb00e3;
+  border: 2px solid #ffbb00e3;
+  font-weight: bold;
+}
+
+.parent-camera {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: #ccc;
+  overflow: hidden;
+}
+
+
+.webcam-container {
+  display: flex;
+  flex-direction: column;
+  flex: 2;
+  align-items: center;
+  justify-content: center;
+}
+
+.pics-1 {
+  flex: 1;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.pics-2 {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 35px;
+}
+
+.start-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}

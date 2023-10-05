@@ -1,0 +1,161 @@
+.header {
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #333;
+  height: 70px;
+  z-index: 1;
+
+
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0rem 9%;
+  position: sticky;
+  top: 0;
+}
+
+.header .navbar {
+  height: 70px;
+  display: flex;
+  list-style: none;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.header .navbar .nav-item {
+  height: 70px;
+  display: flex;
+}
+
+.header .navbar .nav-item li {
+  align-items: center;
+  text-align: center;
+}
+
+.header .navbar .nav-item a {
+  margin: auto;
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
+  padding: 0px 12px;
+}
+
+.header .navbar .nav-item a:hover {
+  color: #fac102;
+  text-transform: uppercase;
+  transform: scale(1.1);
+}
+
+.header .logo {
+  margin: 1px;
+  font-size: 2.5rem;
+  font-weight: bolder;
+  color: white;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.header .logo:hover {
+  color: #333;
+}
+
+.header .logo span {
+  color: var(--orange);
+}
+
+.header .icons h2 {
+  color: whitesmoke;
+  font-size: 28px;
+  cursor: pointer;
+  line-height: 80px;
+}
+
+.header .icons .profdet img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid #ffffff48;
+}
+
+.header .icons i {
+  font-size: 2.5rem;
+  color: white;
+  cursor: pointer;
+  margin-right: 2rem;
+}
+
+.header .icons i:hover {
+  color: var(--orange);
+}
+
+
+/* media queries  */
+
+@media (max-width: 1200px) {
+  html {
+    font-size: 55%;
+  }
+}
+
+@media (max-width: 991px) {
+  .header {
+    padding: 2rem;
+  }
+
+  .section {
+    padding: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  #menu-bar {
+    display: block;
+  }
+
+  .header .navbar {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+    background: #333;
+    border-top: 0.1rem solid rgba(255, 255, 255, 0.2);
+    padding: 1rem 2rem;
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+    display: flex;
+    flex-direction: column;
+    height: 350px;
+  }
+
+  .header .navbar.active {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
+
+  .header .navbar a {
+    display: block;
+    border-radius: 0.5rem;
+    background: #222;
+    width: 450px;
+    padding: 30px;
+    /* height: 45px; */
+  }
+}
+
+@media (max-width: 450px) {
+  html {
+    font-size: 50%;
+  }
+
+  .heading span {
+    font-size: 2.5rem;
+  }
+
+  .contact .row form .inputBox input {
+    width: 100%;
+  }
+}
+
+/* media query ends */

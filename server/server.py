@@ -1,17 +1,100 @@
 import datetime
 import os
 import pickle
+import smtplib
 import sqlite3
 import threading
+from os.path import dirname, join
 
 import cv2
 import face_recognition
 import numpy as np
+from dotenv import load_dotenv
 from flask import Flask, request
 from flask_cors import CORS
 
+dotenv_path = join(dirname(__file__), '.env')
+load_dotenv(dotenv_path)
+
 app = Flask(__name__)
 CORS(app)
+
+
+gmail_user = os.environ.get("EMAIL")
+gmail_app_password = os.environ.get("PASSWORD")
+send_from = os.environ.get("EMAIL")
+
+
+def send_mailer(sender, body):
+    try:
+        server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        server.ehlo()
+        server.login(gmail_user, gmail_app_password)
+        subject = 'Attendance Alert'
+        body = body
+        server.sendmail(send_from, sender, body)
+        server.close()
+        print('Email sent!')
+    except Exception as exception:
+        print("Error: %s!\n\n" % exception)
+
+
+@app.post('/sendmaillees')
+def sendmail():
+    conn = get_db_connection()
+    result = conn.execute('SELECT student_id FROM students').fetchall()
+    unique_ids = []
+    for row in result:
+        if row['student_id'] not in unique_ids:
+            unique_ids.append(row['student_id'])
+    unique_dates = []
+    result = conn.execute('SELECT date FROM attendance').fetchall()
+    for row in result:
+        if row['date'] not in unique_dates:
+            unique_dates.append(row['date'])
+    totaldays = len(unique_dates)
+    for id in unique_ids:
+        result = conn.execute(
+            'SELECT * FROM attendance WHERE student_id = ?', (id,)).fetchall()
+        count = len(result)
+        if count/totaldays < 0.85:
+            student = conn.execute(
+                'SELECT * FROM students WHERE student_id = ?', (id,)).fetchone()
+            if student is not None:
+                email = student['email']
+                send_mailer(email, "Your attendance is less than 85%")
+    return {
+        "message": "Mail sent successfully"
+    }, 200
+
+
+@app.post('/sendmailall')
+def sendmail1():
+    conn = get_db_connection()
+    result = conn.execute('SELECT student_id FROM students').fetchall()
+    unique_ids = []
+    for row in result:
+        if row['student_id'] not in unique_ids:
+            unique_ids.append(row['student_id'])
+    unique_dates = []
+    result = conn.execute('SELECT date FROM attendance').fetchall()
+    for row in result:
+        if row['date'] not in unique_dates:
+            unique_dates.append(row['date'])
+    totaldays = len(unique_dates)
+    for id in unique_ids:
+        result = conn.execute(
+            'SELECT * FROM attendance WHERE student_id = ?', (id,)).fetchall()
+        count = len(result)
+        student = conn.execute(
+            'SELECT * FROM students WHERE student_id = ?', (id,)).fetchone()
+        if student is not None:
+            email = student['email']
+            send_mailer(email, "Your attendance is " +
+                        str(count*100/totaldays)+"%")
+    return {
+        "message": "Mail sent successfully"
+    }, 200
 
 
 @app.route('/getdata', methods=['GET'])

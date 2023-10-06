@@ -42,7 +42,7 @@ def distance():
     # multiply with the sonic speed (34300 cm/s)
     # and divide by 2, because there and back
     distance = (TimeElapsed * 34300) / 2
-    if distance > 10 and distance < 50:
+    if distance > 30 and distance < 100:
         print("Distance: %.1f cm" % distance)
         stream = io.BytesIO()
         with picamera.PiCamera() as camera:

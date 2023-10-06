@@ -3,3 +3,4 @@ db/database.db
 recognizer/model.yml
 images/*
 uploads/*
+.env

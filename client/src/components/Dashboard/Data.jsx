@@ -3,8 +3,8 @@ import { saveAs } from 'file-saver';
 import React, { useEffect, useState } from 'react';
 import * as XLSX from 'xlsx';
 
-import './Data.css';
 import Loading from '../Loading/Loading';
+import './Data.css';
 
 const Data = () => {
     const [data, setData] = useState([]);
@@ -39,6 +39,26 @@ const Data = () => {
     };
 
 
+    const Less = async () => {
+        try {
+            await axios.post('http://localhost:5000/sendmaillees');
+            alert('mail sent');
+        }
+        catch (err) {
+            console.log(err);
+        }
+    };
+
+    const All = async () => {
+        try {
+            await axios.post('http://localhost:5000/sendmailall');
+            alert('mail sent');
+        }
+        catch (err) {
+            console.log(err);
+        }
+    };
+
     // Calculate total presents for each date
     const calculateTotalDatePresents = (dateIndex) => {
         return data?.data.reduce((total, student) => {
@@ -57,13 +77,13 @@ const Data = () => {
                         display: 'block',
                         marginTop: '20px',
                     }}> Export to Excel</button>
-                    <button className='btn' onClick={exportToExcel} style={{
+                    <button className='btn' onClick={All} style={{
                         // center the button
                         margin: '0 auto',
                         display: 'block',
                         marginTop: '20px',
                     }}>Mail all</button>
-                    <button className='btn' onClick={exportToExcel} style={{
+                    <button className='btn' onClick={Less} style={{
                         // center the button
                         margin: '0 auto',
                         display: 'block',

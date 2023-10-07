@@ -57,6 +57,7 @@ def distance():
             GPIO.output(RED_LED_PIN, GPIO.LOW)  # Turn off red LED
             pygame.mixer.music.load("present.wav")
             pygame.mixer.music.play()
+            time.sleep(2)
             GPIO.output(GREEN_LED_PIN, GPIO.LOW)
             GPIO.output(RED_LED_PIN, GPIO.LOW)
 
@@ -65,6 +66,7 @@ def distance():
             GPIO.output(RED_LED_PIN, GPIO.HIGH)  # Turn on red LED
             pygame.mixer.music.load("tryagain.wav")
             pygame.mixer.music.play()
+            time.sleep(2)
             GPIO.output(GREEN_LED_PIN, GPIO.LOW)
             GPIO.output(RED_LED_PIN, GPIO.LOW)
 

@@ -1,6 +1,6 @@
 .DS_Store
 db/database.db
-recognizer/model.yml
+recognizer/*
 images/*
 uploads/*
 .env

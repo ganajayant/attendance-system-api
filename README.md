@@ -2,27 +2,33 @@
 
 This is a Flask-based API for an attendance system. It allows users to upload images, detect faces, mark attendance, and train the face recognition model.
 
-## Requirements
-Given in ```requirements.txt```
-
-## Installation
+## Setup
 1. Clone the repository:
 ```git clone https://github.com/ganajayant/attendance-system-api.git```
 
-2. Navigate to the project directory:
+### Server
+1. Navigate to the project directory:
 ```cd attendance-system-api/server```
 
-3. Build the Docker Image:
+2. Build the Docker Image:
 ```docker build -t "attendance-api" .```
 
-4. Run The Docker Container
-```docker run --name server -p 5000:5000 -d attendance-api```
+3. Run The Docker Container
+```docker-compose up -d```
+
+4. To stop the Docker container
+```docker-compose down```
 
 
-To start the React application, use the following command:
+### Client
+1. Navigate to the project directory:
+```cd attendance-system-api/client```
 
-```npm install && npm start```
+2. Install Dependencies:
+```npm install```
 
+3. Start Application
+```npm start```
 
 ## API Endpoints
 

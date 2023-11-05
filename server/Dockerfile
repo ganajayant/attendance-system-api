@@ -10,6 +10,7 @@ RUN apt-get update --fix-missing && apt-get install -y libpq-dev build-essential
 RUN pip install --no-cache-dir -r requirements.txt
 RUN mkdir uploads
 RUN mkdir images
+RUN mkdir recognizer
 RUN python init_db.py
 
 EXPOSE 5000

@@ -2,6 +2,8 @@ version: '3'
 services:
   server:
     image: attendance-api
+    volumes:
+      - ./:./
     container_name: server
     ports:
       - "5000:5000"

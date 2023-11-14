@@ -11,6 +11,10 @@ import numpy as np
 from dotenv import load_dotenv
 from flask import Flask, request
 from flask_cors import CORS
+from apscheduler.schedulers.background import BackgroundScheduler
+
+scheduler = BackgroundScheduler()
+scheduler.start()
 
 dotenv_path = join(dirname(__file__), '.env')
 load_dotenv(dotenv_path)
@@ -24,12 +28,11 @@ gmail_app_password = os.environ.get("PASSWORD")
 send_from = os.environ.get("EMAIL")
 
 
-def send_mailer(sender, body):
+def send_mailer(sender, body, subject="Attendance Alert"):
     try:
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
             server.ehlo()
             server.login(gmail_user, gmail_app_password)
-            subject = 'Attendance Alert'
             message = f"Subject: {subject}\n\n{body}"
             server.sendmail(send_from, sender, message)
         print('Email sent!')
@@ -352,6 +355,66 @@ def get_db_connection(dir='db/database.db'):
     conn.row_factory = sqlite3.Row
     return conn
 
+
+def class_remainder():
+    conn = get_db_connection()
+    result = conn.execute(
+        'SELECT * FROM students'
+    ).fetchall()
+    for row in result:
+        email = row['email']
+        try:
+            send_mailer(email, body="You have a class in 15 minutes",
+                        subject="Class Remainder")
+        except:
+            print("Error sending mail to " + email)
+    conn.close()
+
+
+def today_attendance():
+    conn = get_db_connection()
+    result = conn.execute(
+        'SELECT * FROM students'
+    ).fetchall()
+    todayattendance = conn.execute(
+        'SELECT * FROM attendance WHERE date = ?', (datetime.datetime.now().strftime(
+            '%Y-%m-%d'),)
+    ).fetchall()
+    stuentids = set()
+    for row in todayattendance:
+        stuentids.add(row['student_id'])
+
+    for row in result:
+        email = row['email']
+        student_id = row['student_id']
+        if student_id not in stuentids:
+            try:
+                send_mailer(email, body="You have not marked attendance today",
+                            subject="Attendance Remainder")
+            except:
+                print("Error sending mail to " + email)
+        else:
+            try:
+                send_mailer(email, body="You have marked attendance today",
+                            subject="Attendance Remainder")
+            except:
+                print("Error sending mail to " + email)
+    conn.close()
+
+
+scheduler.add_job(class_remainder, 'cron',
+                  day_of_week='tue', hour=14, minute=45)
+scheduler.add_job(class_remainder, 'cron',
+                  day_of_week='thu', hour=8, minute=15)
+scheduler.add_job(class_remainder, 'cron',
+                  day_of_week='fri', hour=11, minute=30)
+
+scheduler.add_job(today_attendance, 'cron',
+                  day_of_week='tue', hour=16, minute=20)
+scheduler.add_job(today_attendance, 'cron',
+                  day_of_week='thu', hour=9, minute=50)
+scheduler.add_job(today_attendance, 'cron',
+                  day_of_week='fri', hour=13, minute=5)
 
 port = int(os.environ.get('PORT', 5000))
 app.run(debug=True, host='0.0.0.0', port=port)

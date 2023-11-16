@@ -45,7 +45,7 @@ def distance():
             camera.capture(stream, format='jpeg')
         stream.seek(0)
         response = requests.post(
-            'http://10.0.55.101:5000/attendance', files={'file': stream})
+            'http://10.0.27.0:5000/attendance', files={'file': stream})
         if response.status_code == 200:
             GPIO.output(GREEN_LED_PIN, GPIO.HIGH)  # Turn on green LED
             GPIO.output(RED_LED_PIN, GPIO.LOW)  # Turn off red LED

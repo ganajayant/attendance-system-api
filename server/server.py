@@ -361,14 +361,20 @@ def class_remainder():
     result = conn.execute(
         'SELECT * FROM students'
     ).fetchall()
+
     for row in result:
         email = row['email']
         try:
-            send_mailer(email, body="You have a class in 15 minutes",
+            send_mailer(email, body="You have a class in 30 minutes",
                         subject="Class Remainder")
         except:
             print("Error sending mail to " + email)
     conn.close()
+
+
+def ins(date):
+    send_mailer("abhishek.h@iiits.in",
+                body="Dear Professor,\n\nYou Have an IOT class coming up tomorrow at "+date, subject="Class Remainder")
 
 
 def today_attendance():
@@ -403,18 +409,26 @@ def today_attendance():
 
 
 scheduler.add_job(class_remainder, 'cron',
-                  day_of_week='tue', hour=14, minute=45)
+                  day_of_week='tue', hour=15, minute=15)
 scheduler.add_job(class_remainder, 'cron',
                   day_of_week='thu', hour=8, minute=15)
 scheduler.add_job(class_remainder, 'cron',
                   day_of_week='fri', hour=11, minute=30)
 
+scheduler.add_job(ins, 'cron',
+                  day_of_week='mon', hour=15, minute=15, args=['tuesday at 3:15pm'])
+scheduler.add_job(ins, 'cron',
+                  day_of_week='wed', hour=8, minute=15, args=['thursday at 8:45am'])
+scheduler.add_job(ins, 'cron',
+                  day_of_week='thu', hour=11, minute=30, args=['friday at 12:00pm'])
+
 scheduler.add_job(today_attendance, 'cron',
-                  day_of_week='tue', hour=16, minute=20)
+                  day_of_week='tue', hour=16, minute=1)
 scheduler.add_job(today_attendance, 'cron',
                   day_of_week='thu', hour=9, minute=50)
 scheduler.add_job(today_attendance, 'cron',
                   day_of_week='fri', hour=13, minute=5)
+
 
 port = int(os.environ.get('PORT', 5000))
 app.run(debug=True, host='0.0.0.0', port=port)

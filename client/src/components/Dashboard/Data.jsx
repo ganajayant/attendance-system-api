@@ -10,7 +10,7 @@ const Data = () => {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(true);
     useEffect(() => {
-        axios.get('http://localhost:5000/getdata')
+        axios.get(process.env.REACT_APP_URL + '/getdata')
             .then((response) => {
                 setData(response.data);
                 setLoading(false);
@@ -41,7 +41,7 @@ const Data = () => {
 
     const Less = async () => {
         try {
-            await axios.post('http://localhost:5000/sendmaillees');
+            await axios.post(process.env.REACT_APP_URL + '/sendmaillees');
             alert('mail sent');
         }
         catch (err) {
@@ -51,7 +51,7 @@ const Data = () => {
 
     const All = async () => {
         try {
-            await axios.post('http://localhost:5000/sendmailall');
+            await axios.post(process.env.REACT_APP_URL + '/sendmailall');
             alert('mail sent');
         }
         catch (err) {

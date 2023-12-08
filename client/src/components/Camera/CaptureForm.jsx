@@ -44,7 +44,7 @@ function CaptureForm() {
     });
 
     try {
-      await axios.post("http://localhost:5000/upload", formData, {
+      await axios.post(process.env.REACT_APP_URL + "/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
